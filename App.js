@@ -1,21 +1,33 @@
-import React, {} from "react";
-import { StyleSheet, View } from 'react-native';
-import AzaliaIcon from './components/AzaliaIcon';
-import Task from './components/Task';
+import React, {useState} from "react";
+import { StyleSheet, SafeAreaView } from 'react-native';
+import AddTodo from "./pages/AddTodo";
+import Home from "./pages/Home";
 
 export default function App() {
+  const [tasks, setTasks] = useState([
+    {id: 1, text: 'Сделать тестовое'},
+    {id: 2, text: 'Сделать тестовое'},
+    {id: 3, text: 'Начать зарабатывать 🙌'},
+  ]);
+  const handleAdd = (text) => {
+    if(!text) {
+      return;
+    } else {
+      setTasks((list) => {
+        return [
+          ...list,
+          {id: Math.random().toString(36).substring(7), text: text}
+        ]
+      })
+      console.log(tasks)
+    }
+  }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.tasksWrapper}>
-        <AzaliaIcon style={styles.title}/>
-        <View style={styles.items}>
-          <Task text='Сделать тестовое'/>
-          <Task text='Сделать тестовое'/>
-          <Task text='Начать зарабатывать 🙌'/>
-        </View>
-      </View>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Home tasks={tasks}/>
+      {/* <AddTodo handleAdd={handleAdd}/> */}
+    </SafeAreaView>
   );
 }
 
@@ -23,15 +35,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFAFE',
-  },
-  tasksWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingTop: '6rem'
-  },
-  title: {
-    paddingHorizontal: '1rem'
-  },
-  items: {
   }
 });
