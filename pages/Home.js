@@ -3,7 +3,7 @@ import { StyleSheet, View, Button, FlatList, SafeAreaView } from 'react-native';
 import AzaliaIcon from '../components/AzaliaIcon';
 import Task from '../components/Task';
 
-export default function Home({tasks}) {
+export default function Home({tasks, handleDelete}) {
 
   return (
     <SafeAreaView  style={styles.homeWrapper}>
@@ -11,7 +11,7 @@ export default function Home({tasks}) {
         <AzaliaIcon style={styles.title}/>
         <View style={styles.items}>
           <FlatList data={tasks} renderItem={({item}) => (
-            <Task text={item.text} key={item.id}/>
+            <Task {...item} key={item.id} handleDelete={handleDelete}/>
           )}/>
         </View>
       </View>
