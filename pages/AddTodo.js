@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react";
-import { StyleSheet, View, Text, SafeAreaView, TextInput, Button } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts, Roboto_500Medium, Roboto_400Regular } from '@expo-google-fonts/roboto';
 
 import { TasksContext } from '../TasksContext';
@@ -33,22 +33,21 @@ export default function AddTodo({navigation}) {
     
     return (
         <SafeAreaView style={styles.addWrapper}>
-            <View style={styles.return}>
-                <ReturnIcon 
-                    style={styles.return__logo}
-                    onPress={() =>
-                        navigation.navigate('Home')
-                    }
-                />
+            <TouchableOpacity style={styles.return} onPress={() => navigation.navigate('Home')}>
+                <ReturnIcon style={styles.return__logo}/>
                 <Text style={styles.return__text}>Вернуться назад</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.inputWrapper}>
                 <TextInput style={styles.input} onChangeText={onChange} placeholder='Текст новой задачи' requred/>
-                <Button 
-                    title='Добавить' 
-                    onPress={() => handleAdd(taskText)} 
-                    color={workable ? '#222F3E' : 'rgba(34, 47, 62, 0.5)'}
-                />
+                <TouchableOpacity
+                    style={workable ? styles.addBtn : [styles.addBtn, styles.addBtn_disabled]}
+                    onPress={() => {
+                        handleAdd(taskText);
+                        navigation.navigate('Home')
+                    }} 
+                    >
+                        <Text style={styles.addBtnText}>Добавить</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
@@ -89,5 +88,22 @@ const styles = StyleSheet.create({
         color: '#222F3E',
         padding: 8,
         marginBottom: 16
+    },
+    addBtn: {
+        backgroundColor: '#222F3E',
+        borderRadius: 8,
+        width: '100%',
+        padding: 8,
+        height: 44,
+        textAlign: 'center',
+    },
+    addBtn_disabled: {
+        backgroundColor: 'rgba(34, 47, 62, 0.5)',
+    },
+    addBtnText: {
+        color: 'white',
+        borderRadius: 8,
+        fontFamily: 'Roboto_400Regular',
+        fontSize: 24,
     }
 });

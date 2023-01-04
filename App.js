@@ -10,11 +10,12 @@ import AzaliaIcon from './components/AzaliaIcon';
 import { TasksContextProvider } from './TasksContext';
 
 
+const Stack = createNativeStackNavigator();
+
+
 export default function App() {
 
   const [loading, setLoading] = useState(true);
-
-  const Stack = createNativeStackNavigator();
 
   useEffect(() => {
     setTimeout(() => {setLoading(false)}, 3000)
@@ -33,19 +34,20 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <TasksContextProvider>
-        <Home/>
-        {/* <NavigationContainer>
+        <NavigationContainer>
           <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen
                 name = 'Home'
-                container={Home}
+                component={Home}
+                options={{title: '', headerTransparent: true}}
             />
             <Stack.Screen 
                 name = 'AddTodo'
-                container={AddTodo}
+                component={AddTodo}
+                options={{title: '', headerTransparent: true, headerLeft: null}}
             />
           </Stack.Navigator>
-        </NavigationContainer> */}
+        </NavigationContainer>
       </TasksContextProvider>
    </SafeAreaView>
   );
@@ -54,12 +56,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FAFAFE',
+    backgroundColor: '#E5E5E5',
   },
   loading: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 40
+    gap: 40,
+    backgroundColor: '#E5E5E5'
   }
 });

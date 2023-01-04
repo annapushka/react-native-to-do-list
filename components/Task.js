@@ -4,7 +4,6 @@ import { useFonts, Roboto_400Regular } from '@expo-google-fonts/roboto';
 import { Swipeable } from "react-native-gesture-handler";
 
 
-
 export default function Task({text, id, handleDelete}) {
     const [isSelected, setSelection] = useState(false);
     
@@ -29,7 +28,7 @@ export default function Task({text, id, handleDelete}) {
                 <View style={styles.swipedRow}>
                 <Animated.View style={{opacity}}>
                     <TouchableOpacity onPress={() => handleDelete(id)}>
-                    <Text style={styles.deleteButtonText}>DEL</Text>
+                        <Text style={styles.deleteButtonText}>DEL</Text>
                     </TouchableOpacity>
                 </Animated.View>
                 </View>
@@ -45,7 +44,7 @@ export default function Task({text, id, handleDelete}) {
                     onValueChange={setSelection}
                     style={styles.checkbox}
                 />
-                <Text style={styles.item__text}>{text}</Text>
+                <Text style={!isSelected ? styles.item__text : [styles.item__text, styles.item__text_selected]}>{text}</Text>
             </TouchableOpacity>
         </Swipeable>
        
@@ -70,6 +69,10 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: '#222F3E',
         padding: 8,
+    },
+    item__text_selected: {
+        color: 'rgba(34, 47, 62, 0.5)',
+        textDecorationLine: 'line-through',
     },
     checkbox: {
         alignSelf: 'center',

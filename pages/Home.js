@@ -1,7 +1,8 @@
 import React, {useContext} from "react";
-import { StyleSheet, View, Button, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, View, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-import {TasksContext} from '../TasksContext';
+import { TasksContext } from '../TasksContext';
 
 import AzaliaIcon from '../components/AzaliaIcon';
 import Task from '../components/Task';
@@ -20,15 +21,9 @@ export default function Home({navigation}) {
             )}/>
         </View>
         </View>
-        <View style={styles.btnWrapper}>
-          <Button
-            title="+"
-            style={styles.btn}
-            onPress={() =>
-                navigation.navigate('AddTodo')
-              }
-          />
-      </View>
+        <TouchableOpacity style={styles.btnWrapper} onPress={() => navigation.navigate('AddTodo')}>
+          <Ionicons name="add-circle-sharp" size={56} color="#222F3E" />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -46,8 +41,11 @@ const styles = StyleSheet.create({
     title: {
         paddingHorizontal: 16,
         paddingVertical: 8,
+        marginTop: 30
     },
     btnWrapper: {
         flex: 1,
+        alignItems: 'flex-end',
+        paddingRight: 16,
     }
 });
