@@ -1,12 +1,17 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { StyleSheet, View, Text, SafeAreaView, TextInput, Button } from 'react-native';
 import { useFonts, Roboto_500Medium, Roboto_400Regular } from '@expo-google-fonts/roboto';
+
+import { TasksContext } from '../TasksContext';
+
 import ReturnIcon from "../components/ReturnIcon";
 
 
-export default function AddTodo({handleAdd}) {
+export default function AddTodo({navigation}) {
     const [taskText, setTaskText] = useState('');
     const [workable, setWorkable] = useState(false);
+
+    const { handleAdd } = useContext(TasksContext);
 
     let [fontsLoaded] = useFonts({
         Roboto_500Medium,
@@ -29,7 +34,12 @@ export default function AddTodo({handleAdd}) {
     return (
         <SafeAreaView style={styles.addWrapper}>
             <View style={styles.return}>
-                <ReturnIcon style={styles.return__logo}/>
+                <ReturnIcon 
+                    style={styles.return__logo}
+                    onPress={() =>
+                        navigation.navigate('Home')
+                    }
+                />
                 <Text style={styles.return__text}>Вернуться назад</Text>
             </View>
             <View style={styles.inputWrapper}>

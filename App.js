@@ -1,41 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import Home from './pages/Home';
+import AddTodo from './pages/AddTodo';
 import AzaliaIcon from './components/AzaliaIcon';
-import MainStack from './navigate';
+import { TasksContextProvider } from './TasksContext';
+
 
 export default function App() {
 
-  const [tasks, setTasks] = useState([
-    {id: 1, text: 'Сделать тестовое'},
-    {id: 2, text: 'Сделать тестовое'},
-    {id: 3, text: 'Начать зарабатывать 🙌'},
-  ]);
-
   const [loading, setLoading] = useState(true);
+
+  const Stack = createNativeStackNavigator();
 
   useEffect(() => {
     setTimeout(() => {setLoading(false)}, 3000)
   }, [])
-
-
-  const handleAdd = (text) => {
-    if(!text) {
-      return;
-    } else {
-      setTasks((list) => {
-        return [
-          ...list,
-          {id: Math.random().toString(36).substring(7), text: text}
-        ]
-      })
-    }
-  }
-
-  const handleDelete = (id) => {
-    setTasks((list) => {
-      return list.filter((element) => element.id !== id)
-    })
-  }
 
   
   if (loading) {
@@ -49,8 +32,22 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <MainStack tasks={tasks} handleDelete={handleDelete} handleAdd={handleAdd}/>
-    </SafeAreaView>
+      <TasksContextProvider>
+        <Home/>
+        {/* <NavigationContainer>
+          <Stack.Navigator initialRouteName='Home'>
+            <Stack.Screen
+                name = 'Home'
+                container={Home}
+            />
+            <Stack.Screen 
+                name = 'AddTodo'
+                container={AddTodo}
+            />
+          </Stack.Navigator>
+        </NavigationContainer> */}
+      </TasksContextProvider>
+   </SafeAreaView>
   );
 }
 
